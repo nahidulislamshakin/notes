@@ -95,11 +95,7 @@ class _MyAppState extends State<MyApp> {
         //After 3 second app will go to the login page
         if (!loggedIn && !signingUp && !loggingIn ) {
 
-          if(initScreen == null){
-            return null;
-          }
-          if(initScreen == 0){
-
+          if(initScreen == null || initScreen == 0){
             return '/welcome';
           }
           else {
