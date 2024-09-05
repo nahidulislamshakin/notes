@@ -28,7 +28,7 @@ void main() async {
 
   //SharedPreferences is used to store initScreen value locally
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  initScreen = await preferences.getInt("initScreen");
+  initScreen = preferences.getInt("initScreen");
   //After install initScreen is set to 1, other the value is 0 because it is a global variable
   await preferences.setInt("initScreen", 1);
 
@@ -39,13 +39,20 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
+    bool splashShown = false;
 
     // GoRouter package is used to navigate between page
     final GoRouter _router = GoRouter(
@@ -87,8 +94,13 @@ class MyApp extends StatelessWidget {
         //Checking whether it is login or not, if not, again check the app is first time loaded or not.
         //For the first time loaded app will navigate to welcome page. which is splash screen.
         //After 3 second app will go to the login page
-        if (!loggedIn && !signingUp && !loggingIn) {
-          if(initScreen == 0 || initScreen == null){
+        if (!loggedIn && !signingUp && !loggingIn && !splashShown) {
+
+          if(initScreen == null){
+            return null;
+          }
+          if(initScreen == 0){
+            splashShown = true;
             return '/welcome';
           }
           else {

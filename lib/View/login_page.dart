@@ -35,9 +35,10 @@ class _LoginPageState extends State<LoginPage> {
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final availableHeight = height - keyboardHeight;
     final firebaseServices = FirebaseServices();
+    FocusNode _focusNode = FocusNode();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -63,6 +64,12 @@ class _LoginPageState extends State<LoginPage> {
                       width: width,
                       height: height,
                       textField: TextFormField(
+                        onTap: () {
+                          // Prevent navigation or state changes when tapping on the input
+                          setState(() {
+                            _focusNode.requestFocus();
+                          });
+                        },
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
