@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:notes/View/home_page.dart';
 
 import '../firebase_services/firebase_services.dart';
@@ -8,7 +9,6 @@ import '../utils/input_box.dart';
 import '../utils/utils.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -42,7 +42,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: width,
             height: availableHeight,
             child: Padding(
@@ -125,13 +125,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             password: passwordController.text,
                         name: nameController.text);
                         if (FirebaseAuth.instance.currentUser!=null) {
-                          print("Successful");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(),
-                            ),
-                          );
+
+                          context.go('/home');
                         }
                         else {
                           // Handle the case where user creation failed
@@ -152,7 +147,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go('/login');
+                          },
                           child: Text(
                             "Login",
                             style: Theme.of(context).textTheme.labelLarge,

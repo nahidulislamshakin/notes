@@ -95,33 +95,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Forgot Password?",
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await firebaseServices.login(email: emailController.text, password: passwordController.text);
-                            if(FirebaseAuth.instance.currentUser != null ){
-                               context.go('/home');
-                            }
-                            else{
-                              Utils.toastMessage("Invalid Email or Password");
-                            }
-                          },
-                          child: Text(
-                            "Login",
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
-                        ),
-                      ],
+                    ElevatedButton(
+                      onPressed: () async {
+                        await firebaseServices.login(email: emailController.text, password: passwordController.text);
+                        if(FirebaseAuth.instance.currentUser != null ){
+                           context.go('/home');
+                        }
+                        else{
+                          Utils.toastMessage("Invalid Email or Password");
+                        }
+                      },
+                      child: Text(
+                        "Login",
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                     ),
                     SizedBox(height: 5.h),
                     Row(
@@ -133,7 +120,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            context.go('/registration_page');
+                            if(FirebaseAuth.instance.currentUser == null){
+                              context.push('/registration');
+                              print("Navigating is not working");
+                            }
+
                           },
                           child: Text(
                             "SIGN UP",

@@ -17,9 +17,10 @@ class NoteController extends GetxController {
 
   }
 
-  void fetchNote() async {
+  Future<RxList<Note>> fetchNote() async {
     var fetchedNote = await _firebaseServices.fetchNotesFromFirestore();
     notes.value = fetchedNote;
+    return notes;
   }
 
 }

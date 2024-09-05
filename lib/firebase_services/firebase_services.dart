@@ -41,12 +41,17 @@ class FirebaseServices {
   }
 
   //SignOut using Firebase Authentication
-  Future signOut() async {
+  Future<void> signOut() async {
     try {
-      final result = await _auth.signOut();
-      return result;
+      await _auth.signOut();
+      if (kDebugMode) {
+        print(_auth.currentUser?.email.toString());
+      }
+
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      if (kDebugMode) {
+        print(e.message);
+      }
     }
   }
 
@@ -77,6 +82,9 @@ class FirebaseServices {
 
   Future<List<Note>> fetchNotesFromFirestore() async {
     final userId = _auth.currentUser?.uid;
+    if (kDebugMode) {
+      print(_auth.currentUser?.email.toString());
+    }
 
     if (userId != null) {
       final snapshot = await _firestore

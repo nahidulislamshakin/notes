@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:notes/utils/input_box.dart';
 import '../controller/note_controller.dart';
 import '../model/note_model.dart';
 
@@ -33,6 +32,7 @@ class _AddNotePageState extends State<AddNotePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Note'),
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
