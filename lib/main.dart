@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notes/View/add_note_page.dart';
 import 'package:notes/View/registration_page.dart';
+import 'package:notes/local_storage_services/init_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'View/home_page.dart';
 import 'View/login_page.dart';
@@ -48,6 +49,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+
+
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -59,8 +62,8 @@ class _MyAppState extends State<MyApp> {
         GoRoute(
           path: '/',
           builder: (context, state) =>
-          FirebaseAuth.instance.currentUser != null
-              ? HomePage()
+          initScreen == null || initScreen == 0
+              ? Welcome()
               : LoginPage(),
         ),
         GoRoute(
@@ -85,35 +88,42 @@ class _MyAppState extends State<MyApp> {
           builder: (context, state) => Welcome(),
         )
       ],
-      redirect: (BuildContext context, GoRouterState state) {
-        final loggedIn = FirebaseAuth.instance.currentUser != null;
-        final signingUp = state.uri.toString() == '/registration';
-        final loggingIn = state.uri.toString() == '/login';
-
-        //Checking whether it is login or not, if not, again check the app is first time loaded or not.
-        //For the first time loaded app will navigate to welcome page. which is splash screen.
-        //After 3 second app will go to the login page
-        if (!loggedIn && !signingUp && !loggingIn ) {
-
-          if(initScreen == null || initScreen == 0){
-            return '/welcome';
-          }
-          else {
-            if(!loggingIn && !loggedIn){
-              return '/login';
-            }
-            else if(!loggedIn && !signingUp){
-              return '/registration';
-            }
-          }
-
-
-        }
-        else if (loggedIn  && (loggingIn || signingUp)) {
-          return '/';
-        }
-        return null;  // No redirection
-      },
+      // redirect: (BuildContext context, GoRouterState state) {
+      //   final loggedIn = FirebaseAuth.instance.currentUser != null;
+      //   final signingUp = state.uri.toString() == '/registration';
+      //   final loggingIn = state.uri.toString() == '/login';
+      //
+      //   //Checking whether it is login or not, if not, again check the app is first time loaded or not.
+      //   //For the first time loaded app will navigate to welcome page. which is splash screen.
+      //   //After 3 second app will go to the login page
+      //   if (!loggedIn && !signingUp && !loggingIn ) {
+      //
+      //     if(initScreen == null || initScreen == 0){
+      //       return '/welcome';
+      //     }
+      //     return '/';
+      //     // else {
+      //     //   if(!loggingIn && !loggedIn){
+      //     //     return '/login';
+      //     //   }
+      //     //   else if(!loggedIn && !signingUp){
+      //     //     return '/registration';
+      //     //   }
+      //     // }
+      //
+      //
+      //   }
+      //   // Do not trigger a rebuild when already on the right page
+      //   if (signingUp || loggingIn) {
+      //     return null; // No redirection needed, avoid unnecessary rebuilds
+      //   }
+      //
+      //   // if (loggedIn) {
+      //   //   return '/'; // Redirect to home if already logged in
+      //   // }
+      //
+      //   return null; // No redirection
+      // },
     );
 
 
@@ -157,6 +167,12 @@ class _MyAppState extends State<MyApp> {
         );
       },
     );
+  }
+}
+
+class SetInitScreen{
+  SetInitScreen(){
+    initScreen = 1;
   }
 }
 

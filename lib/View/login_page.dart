@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:notes/View/home_page.dart';
 import 'package:notes/View/registration_page.dart';
 import 'package:notes/firebase_services/firebase_services.dart';
+import 'package:notes/local_storage_services/init_screen.dart';
+import 'package:notes/main.dart';
 import 'package:notes/utils/utils.dart';
 
 import '../utils/input_box.dart';
@@ -20,6 +23,17 @@ class _LoginPageState extends State<LoginPage> {
   String? errorMessage;
   bool valid = true;
   final _formKey = GlobalKey<FormState>();
+
+
+
+  @override
+  void initState() {
+    setState(() {
+      SetInitScreen();
+    });
+
+    super.initState();
+  }
   @override
   void dispose() {
     // TODO: implement dispose
@@ -37,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final firebaseServices = FirebaseServices();
     FocusNode _focusNode = FocusNode();
 
-    return Scaffold(
+    return FirebaseAuth.instance.currentUser != null ? HomePage() : Scaffold(
       //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -64,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: width,
                       height: height,
                       textField: TextFormField(
+                        autofillHints: null,
                         onTap: () {
                           // Prevent navigation or state changes when tapping on the input
                           setState(() {
@@ -89,6 +104,13 @@ class _LoginPageState extends State<LoginPage> {
                       width: width,
                       height: height,
                       textField: TextFormField(
+                        autofillHints: null,
+                        onTap: () {
+                          // Prevent navigation or state changes when tapping on the input
+                          setState(() {
+                            _focusNode.requestFocus();
+                          });
+                        },
                         obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(
@@ -106,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         await firebaseServices.login(email: emailController.text, password: passwordController.text);
                         if(FirebaseAuth.instance.currentUser != null ){
-                           context.go('/home');
+                          context.go('/home');
                         }
                         else{
                           Utils.toastMessage("Invalid Email or Password");
@@ -140,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
+
                   ],
                 ),
               ),

@@ -84,6 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       width: width,
                       height: height,
                       textField: TextFormField(
+                        autofillHints: null,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -103,6 +104,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       width: width,
                       height: height,
                       textField: TextFormField(
+                        autofillHints: null,
                         obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(
@@ -115,6 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ),
                     ),
+
                     SizedBox(height: 25.h),
                     ElevatedButton(
                       onPressed: () async {
@@ -123,7 +126,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         await firebaseServices.signUp(
                             email: emailController.text,
                             password: passwordController.text,
-                        name: nameController.text);
+                            name: nameController.text);
                         if (FirebaseAuth.instance.currentUser!=null) {
 
                           context.go('/home');
@@ -157,6 +160,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ],
                     ),
+
                   ],
                 ),
               ),
