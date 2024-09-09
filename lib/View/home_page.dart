@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(left: 10.w, right: 10.w),
             child: Obx(() {
               print(noteController.notes.length);
-                return FutureBuilder(
+              return FutureBuilder(
                   future: noteController.fetchNote(),
                   builder: (context,snapshot) {
                     return ListView.builder(
@@ -76,14 +76,14 @@ class _HomePageState extends State<HomePage> {
                       },
                     );
                   }
-                );
-             // }
+              );
+              // }
 
             })),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-        context.push('/add');
+          context.push('/add');
         },
         child: const Icon(Icons.add),
       ),

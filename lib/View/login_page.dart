@@ -18,16 +18,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final FocusNode emailfocusNode = FocusNode();
-  final FocusNode passwordfocusNode = FocusNode();
   String? errorMessage;
   bool valid = true;
   final _formKey = GlobalKey<FormState>();
 
-
-
+  //calling SetInitScreen method of main file to set the value of initScreen 1 for avoiding rebuild of splashScreen
   @override
   void initState() {
     setState(() {
@@ -41,10 +39,6 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
-    emailfocusNode.dispose();
-    passwordfocusNode.dispose();
-
-
     super.dispose();
   }
 
@@ -57,8 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final firebaseServices = FirebaseServices();
 
 
-    return FirebaseAuth.instance.currentUser != null ? HomePage() :
-    Scaffold(
+    return Scaffold(
       //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     //InputBox is a custom design for TextFormField
                     InputBox(
                       textField: TextFormField(
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -100,8 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 25.h),
                     InputBox(
                       textField: TextFormField(
-                        //autofillHints: null,
-                       // focusNode: passwordfocusNode,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                         obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(

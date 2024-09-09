@@ -21,8 +21,6 @@ class _WelcomeState extends State<Welcome> {
 
     //Wait for 3 seconds to go to the Login Page
      Timer(const Duration(seconds: 3),(){
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage()));
-       //context.go('/login');
        context.pushReplacement('/login');
      });
   }

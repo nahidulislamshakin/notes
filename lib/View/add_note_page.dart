@@ -27,11 +27,11 @@ class _AddNotePageState extends State<AddNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    // final width = MediaQuery.of(context).size.width;
+    // final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Note'),
+        title: const Text('Add Note'),
 
       ),
       body: Padding(
@@ -43,6 +43,7 @@ class _AddNotePageState extends State<AddNotePage> {
                 Text("Title",style: Theme.of(context).textTheme.titleLarge,),
                 SizedBox(height: 10.h,),
                 TextFormField(
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                   controller: titleController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -59,6 +60,7 @@ class _AddNotePageState extends State<AddNotePage> {
                 Text("Description",style: Theme.of(context).textTheme.titleLarge,),
                 SizedBox(height: 10.h,),
                 TextFormField(
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                   controller: descriptionController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -71,7 +73,7 @@ class _AddNotePageState extends State<AddNotePage> {
                   ),
                   maxLines: 5,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 ElevatedButton(
                   onPressed: () {
                     if (titleController.text.isNotEmpty &&
@@ -81,10 +83,10 @@ class _AddNotePageState extends State<AddNotePage> {
                         description: descriptionController.text,
                       );
                       noteController.addNote(newNote);
-                     context.push('/home');
+                     context.pushReplacement('/home');
                     }
                   },
-                  child: Text('Add Note'),
+                  child: const Text('Add Note'),
                 ),
               ],
             ),

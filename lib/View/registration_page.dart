@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -63,6 +64,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                     InputBox(
                       textField: TextFormField(
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                         controller: nameController,
                         decoration: InputDecoration(
                           labelText: "Name",
@@ -82,7 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     //InputBox is a custom design for TextFormField
                     InputBox(
                       textField: TextFormField(
-                        autofillHints: null,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -100,8 +102,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(height: 25.h),
                     InputBox(
                       textField: TextFormField(
-                        autofillHints: null,
-                        obscureText: true,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 17.sp),
+                       // obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(
                           labelText: "Enter Password",
@@ -117,7 +119,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(height: 25.h),
                     ElevatedButton(
                       onPressed: () async {
-                        print("Email: ${emailController.text}, Password: ${passwordController.text}");
+                        if (kDebugMode) {
+                          print("Email: ${emailController.text}, Password: ${passwordController.text}");
+                        }
 
                         await firebaseServices.signUp(
                             email: emailController.text,
