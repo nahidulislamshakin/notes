@@ -81,7 +81,7 @@ class _AddNotePageState extends State<AddNotePage> {
                         description: descriptionController.text,
                       );
                       noteController.addNote(newNote);
-                      context.go('/home'); // Go back to the previous screen after adding the note
+                     context.push('/home');
                     }
                   },
                   child: Text('Add Note'),

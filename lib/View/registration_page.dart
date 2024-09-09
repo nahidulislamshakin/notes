@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+//import 'package:go_router/go_router.dart';
 import 'package:notes/View/home_page.dart';
 
 import '../firebase_services/firebase_services.dart';
 import '../utils/input_box.dart';
 import '../utils/utils.dart';
+import 'login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
 
@@ -60,8 +62,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(height: 15.h),
 
                     InputBox(
-                      width: width,
-                      height: height,
                       textField: TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
@@ -81,8 +81,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                     //InputBox is a custom design for TextFormField
                     InputBox(
-                      width: width,
-                      height: height,
                       textField: TextFormField(
                         autofillHints: null,
                         controller: emailController,
@@ -101,8 +99,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     SizedBox(height: 25.h),
                     InputBox(
-                      width: width,
-                      height: height,
                       textField: TextFormField(
                         autofillHints: null,
                         obscureText: true,
@@ -128,8 +124,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             password: passwordController.text,
                             name: nameController.text);
                         if (FirebaseAuth.instance.currentUser!=null) {
-
-                          context.go('/home');
+                          context.pushReplacement('/home');
                         }
                         else {
                           // Handle the case where user creation failed
@@ -151,7 +146,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            context.go('/login');
+                            context.push('/login');
                           },
                           child: Text(
                             "Login",
@@ -160,7 +155,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),

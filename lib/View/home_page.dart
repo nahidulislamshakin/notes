@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notes/firebase_services/firebase_services.dart';
 import '../controller/note_controller.dart';
+import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               await FirebaseServices().signOut();
               if (FirebaseAuth.instance.currentUser == null) {
                 noteController.notes.clear();
-                context.go('/login');
+                context.pushReplacement('/login');
               }
             },
             child: const Text(
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/add');
+        context.push('/add');
         },
         child: const Icon(Icons.add),
       ),

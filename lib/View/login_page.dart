@@ -20,6 +20,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final FocusNode emailfocusNode = FocusNode();
+  final FocusNode passwordfocusNode = FocusNode();
   String? errorMessage;
   bool valid = true;
   final _formKey = GlobalKey<FormState>();
@@ -39,6 +41,10 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
+    emailfocusNode.dispose();
+    passwordfocusNode.dispose();
+
+
     super.dispose();
   }
 
@@ -49,13 +55,14 @@ class _LoginPageState extends State<LoginPage> {
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final availableHeight = height - keyboardHeight;
     final firebaseServices = FirebaseServices();
-    FocusNode _focusNode = FocusNode();
 
-    return FirebaseAuth.instance.currentUser != null ? HomePage() : Scaffold(
+
+    return FirebaseAuth.instance.currentUser != null ? HomePage() :
+    Scaffold(
       //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: width,
             height: availableHeight,
             child: Padding(
@@ -75,16 +82,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     //InputBox is a custom design for TextFormField
                     InputBox(
-                      width: width,
-                      height: height,
                       textField: TextFormField(
-                        autofillHints: null,
-                        onTap: () {
-                          // Prevent navigation or state changes when tapping on the input
-                          setState(() {
-                            _focusNode.requestFocus();
-                          });
-                        },
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -101,16 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 25.h),
                     InputBox(
-                      width: width,
-                      height: height,
                       textField: TextFormField(
-                        autofillHints: null,
-                        onTap: () {
-                          // Prevent navigation or state changes when tapping on the input
-                          setState(() {
-                            _focusNode.requestFocus();
-                          });
-                        },
+                        //autofillHints: null,
+                       // focusNode: passwordfocusNode,
                         obscureText: true,
                         controller: passwordController,
                         decoration: InputDecoration(
@@ -128,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         await firebaseServices.login(email: emailController.text, password: passwordController.text);
                         if(FirebaseAuth.instance.currentUser != null ){
-                          context.go('/home');
+                          context.pushReplacement('/home');
                         }
                         else{
                           Utils.toastMessage("Invalid Email or Password");
@@ -151,9 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             if(FirebaseAuth.instance.currentUser == null){
                               context.push('/registration');
-                              print("Navigating is not working");
                             }
-
                           },
                           child: Text(
                             "SIGN UP",
@@ -162,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),

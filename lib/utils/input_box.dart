@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //Custom Design for Email Password Input Field
-class InputBox extends StatelessWidget {
-  final double width;
-  final double height;
+class InputBox extends StatefulWidget {
+
   final Widget textField;
 
   const InputBox(
       {super.key,
-        required this.width,
-        required this.height,
         required this.textField,
       });
+
+  @override
+  State<InputBox> createState() => _InputBoxState();
+}
+
+class _InputBoxState extends State<InputBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +33,7 @@ class InputBox extends StatelessWidget {
           )
         ],
       ),
-      child: textField,
+      child: widget.textField,
     );
   }
 }
